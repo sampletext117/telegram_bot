@@ -8,8 +8,8 @@ from telegram import ReplyKeyboardMarkup
 
 
 TOKEN = "811923269:AAEvsabOZP_KFjVTUzF5Lr837IgK-kFyH-s"
-password = "knigavuhetop"
 admin_usernames = ("taskforce1", "VladislavChernyakoff")
+filename = "logs.log"
 
 def setup_proxy_and_start(token, proxy=True):
     # Указываем настройки прокси (socks5)
@@ -39,19 +39,19 @@ def setup_proxy_and_start(token, proxy=True):
 def send_logs(bot, update):
     message = update.message.text
     if message == "Отправить последний лог":
-        with open("logs.log", mode= "r", encoding="utf-8") as f:
+        with open(filename, mode= "r", encoding="utf-8") as f:
             lines = f.read().splitlines()
             logs = lines[-1]
             update.message.reply_text(logs)
 
     elif message == "Отправить всю историю логов":
-        with open("logs.log", mode= "r", encoding="utf-8") as f:
+        with open(filename, mode= "r", encoding="utf-8") as f:
             lines = f.read().splitlines()
             logs = "\n".join([i for i in lines])
             update.message.reply_text(logs)
 
     elif message == "Отправить историю логов за сегодняшний день":
-        with open("logs.log", mode= "r", encoding="utf-8") as f:
+        with open(filename, mode= "r", encoding="utf-8") as f:
             lines = f.read().splitlines()
             date = str(datetime.datetime.now()).split(" ")[0]
             for i in lines:
@@ -59,7 +59,7 @@ def send_logs(bot, update):
                     update.message.reply_text(i)
 
     elif message == "Отправить историю логов за последнюю неделю":
-        with open("logs.log", mode="r", encoding="utf-8") as f:
+        with open(filename, mode="r", encoding="utf-8") as f:
             lines = f.read().splitlines()
             date = datetime.datetime.now()
             dates_list = []
